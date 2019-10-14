@@ -4,5 +4,5 @@ namespace LaravelMailgunExtended;
 
 interface MailgunExtendedExceptionInterface
 {
-    public function __construct($message, \Exception $e);
+    public function handle(\Swift_Mime_SimpleMessage $message, \Exception $e);
 }

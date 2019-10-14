@@ -4,5 +4,5 @@ namespace LaravelMailgunExtended;
 
 interface MailgunExtendedProcessInterface
 {
-    public function __construct($message, $response);
+    public function handle(\Swift_Mime_SimpleMessage $message, $response);
 }

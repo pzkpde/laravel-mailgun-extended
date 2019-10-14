@@ -11,6 +11,9 @@ class MailgunExtendedTransport extends MailgunTransport
     {
         $config = config('services.mailgun.events');
 
+        $process = new $config['process'];
+        $exception = new $config['exception'];
+
         $this->beforeSendPerformed($message);
 
         $to = $this->getTo($message);
@@ -26,18 +29,15 @@ class MailgunExtendedTransport extends MailgunTransport
                 "https://{$this->endpoint}/v3/{$this->domain}/messages.mime",
                 $payload
             );
+
+            $this->sendPerformed($message);
+
+            $process->handle($message, $response);
+
         } catch (\Exception $e) {
-            if (isset($config['exception'])) {
-                new $config['exception']($message, $e);
-                return null;
-            }
+
+            $exception->handle($message, $e);
             throw $e;
-        }
-
-        $this->sendPerformed($message);
-
-        if (isset($config['process'])) {
-            new $config['process']($message, $response);
         }
 
         return $this->numberOfRecipients($message);
