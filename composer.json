@@ -1,0 +1,19 @@
+{
+    "name": "pzkpde/laravel-mailgun-extended",
+    "description": "Extended Mailgun functionality",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "pzkpde",
+            "email": "pzkpde@bk.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelMailgunExtended\\": "src/"
+        }
+    }
+}
