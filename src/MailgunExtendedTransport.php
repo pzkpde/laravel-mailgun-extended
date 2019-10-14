@@ -27,8 +27,10 @@ class MailgunExtendedTransport extends MailgunTransport
                 $payload
             );
         } catch (\Exception $e) {
-            if (isset($config['error']) && $config['exception'] instanceof MailgunExtendedExceptionInterface) {
-                new $config['error']($message, $e);
+            if (isset($config['exception'])
+                && in_array(MailgunExtendedExceptionInterface::class, class_implements($config['exception'])))
+            {
+                new $config['exception']($message, $e);
                 return null;
             }
             throw $e;
@@ -36,7 +38,9 @@ class MailgunExtendedTransport extends MailgunTransport
 
         $this->sendPerformed($message);
 
-        if (isset($config['process']) && $config['process'] instanceof MailgunExtendedProccessInterface) {
+        if (isset($config['process'])
+            && in_array(MailgunExtendedProccessInterface::class, class_implements($config['process'])))
+        {
             new $config['process']($message, $response);
         }
 
