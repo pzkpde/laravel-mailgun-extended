@@ -7,12 +7,19 @@ use Swift_Mime_SimpleMessage;
 
 class MailgunExtendedTransport extends MailgunTransport
 {
+    const IS_FAKE_TRANSPORT = ':is_fake:';
+
     public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {
         $config = config('services.mailgun.events');
 
         $process = new $config['process'];
         $exception = new $config['exception'];
+
+        if (isset($config['fake']) && $config['fake']) {
+            $process->handle($message, self::IS_FAKE_TRANSPORT);
+            return count($message->getTo());
+        }
 
         $this->beforeSendPerformed($message);
 
