@@ -3,13 +3,13 @@
 namespace LaravelMailgunExtended;
 
 use Illuminate\Mail\Transport\MailgunTransport;
-use Swift_Mime_SimpleMessage;
+use Swift_Mime_Message;
 
 class MailgunExtendedTransport extends MailgunTransport
 {
     const IS_FAKE_TRANSPORT = ':is_fake:';
 
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    public function send(Swift_Mime_Message $message, &$failedRecipients = null)
     {
         $config = config('services.mailgun.events');
 
