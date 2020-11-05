@@ -2,7 +2,10 @@
 
 namespace LaravelMailgunExtended;
 
-class SmtpExtendedTransport extends Swift_SmtpTransport
+use Swift_SmtpTransport as SmtpTransport;
+use Swift_Mime_SimpleMessage;
+
+class SmtpExtendedTransport extends SmtpTransport
 {
     /**
      * Send the given Message.
