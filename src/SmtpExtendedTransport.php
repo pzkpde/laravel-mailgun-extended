@@ -2,10 +2,7 @@
 
 namespace LaravelMailgunExtended;
 
-use Swift_SmtpTransport as SmtpTransport;
-use Swift_Mime_SimpleMessage;
-
-class SmtpExtendedTransport extends SmtpTransport
+class SmtpExtendedTransport extends \Swift_SmtpTransport
 {
     /**
      * Send the given Message.
@@ -17,7 +14,7 @@ class SmtpExtendedTransport extends SmtpTransport
      *
      * @return int
      */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
+    public function send(\Swift_Mime_SimpleMessage $message, &$failedRecipients = null)
     {
         if (!$this->isStarted()) {
             $this->start();
